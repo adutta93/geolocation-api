@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
-const shortid = require('shortid');
-const { FindUser } = require('../utils/UserUtility');
+const { FindUser, GenerateUserToken } = require('../utils/UserUtility');
 const { GenereteSalt, GeneretePassword, GenerateSignature } = require('../utils/PasswordUtility');
+
 /**
  *
  * ! Add user
@@ -9,7 +9,7 @@ const { GenereteSalt, GeneretePassword, GenerateSignature } = require('../utils/
  */
 
 exports.signup = async (req, res) => {
-	const { firstName, lastName, email, password } = req.body;
+	const { firstName, lastName, email, password, role } = req.body;
 	const UserExist = await FindUser('', email);
 
 	if (UserExist) {
@@ -23,9 +23,41 @@ exports.signup = async (req, res) => {
 		lastName,
 		email,
 		hash_password,
-		username: shortid.generate(),
+		role,
+		userToken: GenerateUserToken(firstName, lastName, role),
 	});
 	return res.status(200).json({
 		_createUser,
 	});
+};
+
+/**
+ *
+ * ! Login
+ * * Post req
+ */
+
+exports.signin = async (req, res) => {
+	const { email, password } = req.body;
+	const UserExist = await FindUser('', email);
+	if (!UserExist) {
+		return res.status(400).json({
+			message: 'User dose not exists',
+		});
+	} else {
+		const isPassword = await UserExist.authenticate(password);
+		if (isPassword) {
+			const token = await GenerateSignature({ _id: UserExist._id, role: UserExist.role });
+			const { _id, email, role, fullName, userToken } = UserExist;
+			res.cookie('token', token, { expiresIn: '10d' });
+			res.status(200).json({
+				token,
+				user: { _id, fullName, userToken, email, role },
+			});
+		} else {
+			return res.status(400).json({
+				message: 'Invalid password',
+			});
+		}
+	}
 };

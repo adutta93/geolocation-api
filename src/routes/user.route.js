@@ -1,11 +1,11 @@
 const express = require('express');
-const { signup } = require('../controllers/user.controller');
+const { signup, signin } = require('../controllers/user.controller');
 const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validator/auth.validator');
 const { isSignedIn } = require('../middleware/auth.middleware');
 const router = express.Router();
 
 router.post('/signup', validateSignupRequest, isRequestValidated, signup);
-// router.post('/admin/signin', validateSigninRequest, isRequestValidated, signin);
+router.post('/signin', validateSigninRequest, isRequestValidated, signin);
 // router.post('/admin/signout', signout);
 
 router.post('/admin/profile', isSignedIn, (req, res) => {
