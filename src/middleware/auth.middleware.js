@@ -11,7 +11,7 @@ exports.isSignedIn = (req, res, next) => {
 	//jwt.decode()
 };
 
-exports.OwnerMiddleware = (req, res, next) => {
+exports.isOwner = (req, res, next) => {
 	const role = req.user.role;
 	if (role !== 'admin' || role !== 'owner') {
 		next();
@@ -20,7 +20,7 @@ exports.OwnerMiddleware = (req, res, next) => {
 	}
 };
 
-exports.AdminMiddleware = (req, res, next) => {
+exports.isAdmin = (req, res, next) => {
 	if (req.user.role === 'admin') {
 		next();
 	} else {
