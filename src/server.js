@@ -10,13 +10,17 @@ app.use(express.json());
 
 /**
  * !MongoDb Connection
- *
  */
 ConnectDb();
 
 /**
+ * !Routes
+ */
+const userRoutes = require('./routes/user.route');
+app.use('/dev/api', userRoutes);
+
+/**
  * !Server
- *
  */
 const PORT = process.env.PORT || 1993;
 
