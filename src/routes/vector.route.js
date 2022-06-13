@@ -1,10 +1,11 @@
 const express = require('express');
-const { CreateVector } = require('../controllers/vector.controller');
+const { CreateVector, SearchThroughQueryParams } = require('../controllers/vector.controller');
 // const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validator/auth.validator');
 const { isSignedIn, isOwner } = require('../middleware/auth.middleware');
 const router = express.Router();
 
 router.post('/add-vector', isSignedIn, isOwner, CreateVector);
+router.get('/search/vector', isSignedIn, SearchThroughQueryParams);
 
 // router.post('/admin/signout', signout);
 

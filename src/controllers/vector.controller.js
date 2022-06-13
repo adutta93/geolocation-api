@@ -36,3 +36,21 @@ exports.CreateVector = async (req, res) => {
 		});
 	}
 };
+
+exports.SearchThroughQueryParams = async (req, res) => {
+	const { className, region } = req.query;
+	console.log(className, region);
+	const vector = await Vector.findOne({ className: className, region: region });
+	if (!vector) {
+		res.status(400).json({
+			status: 'Failed',
+			message: 'Vector not found',
+		});
+	} else {
+		res.status(201).json({
+			status: 'Success',
+			message: 'Got vector',
+			vector,
+		});
+	}
+};
