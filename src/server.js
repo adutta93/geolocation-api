@@ -19,8 +19,10 @@ ConnectDb();
  */
 const userRoutes = require('./routes/user.route');
 const regionRoutes = require('./routes/region.route');
+const vectorRoutes = require('./routes/vector.route');
 app.use('/dev/api', userRoutes);
 app.use('/dev/api', regionRoutes);
+app.use('/dev/api', vectorRoutes);
 
 /**
  * !Server
