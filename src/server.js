@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const ConnectDb = require('./db/db');
+const { PORT } = require('./config');
 
 const app = express();
 app.use(cors());
@@ -24,9 +25,9 @@ app.use('/dev/api', regionRoutes);
 /**
  * !Server
  */
-const PORT = process.env.PORT || 1993;
+const port = PORT || 1993;
 
 app.listen(PORT, () => {
 	console.clear();
-	console.log(`Port is running at ${PORT}`);
+	console.log(`Port is running at ${port}`);
 });

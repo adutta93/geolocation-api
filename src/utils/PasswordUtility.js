@@ -1,7 +1,7 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const APP_SECRET = 'gbrynunmi#$@mt#$@o9#$@';
+const { SECRET } = require('../config');
 
 const GenereteSalt = async () => {
 	return await bcrypt.genSalt();
@@ -16,16 +16,7 @@ const ValidatePassword = async (enteredPassword, savedPassword, salt) => {
 };
 
 const GenerateSignature = async (payload) => {
-	return await jwt.sign(payload, APP_SECRET, { expiresIn: '1d' });
+	return await jwt.sign(payload, SECRET, { expiresIn: '1d' });
 };
 
-const ValidateSignature = async (req) => {
-	if (req.headers.authorization) {
-		const token = req.headers.authorization.split(' ')[1];
-		const user = jwt.verify(token, APP_SECRET);
-		req.user = user;
-		return true;
-	}
-	return false;
-};
-module.exports = { GenereteSalt, GeneretePassword, ValidatePassword, GenerateSignature, ValidateSignature };
+module.exports = { GenereteSalt, GeneretePassword, ValidatePassword, GenerateSignature };

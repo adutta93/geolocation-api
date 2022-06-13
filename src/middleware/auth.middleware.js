@@ -1,15 +1,15 @@
 require('dotenv').config();
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
-const APP_SECRET = 'gbrynunmi#$@mt#$@o9#$@';
+const { SECRET } = require('../config/');
 
 exports.isSignedIn = async (req, res, next) => {
-	console.log('process.env.APP_SECRET', process.env.APP_SECRET);
+	console.log('process.env.APP_SECRET', SECRET);
 	let token;
 	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
 		try {
 			token = req.headers.authorization.split(' ')[1];
-			const decoded = jwt.verify(token, process.env.APP_SECRET);
+			const decoded = jwt.verify(token, SECRET);
 			req.user = await User.findById(decoded._id).select('-password');
 			next();
 		} catch (err) {
@@ -23,7 +23,10 @@ exports.isSignedIn = async (req, res, next) => {
 };
 
 exports.isOwner = (req, res, next) => {
-	console.log('User role => ', req.user.role);
+	console.log('User role => ', req);
+	if (req.user === null) {
+		req.user.role = 'user';
+	}
 	if (req.user.role !== 'owner') {
 		return res.status(403).json({
 			message: "You're not an owner, access denied",

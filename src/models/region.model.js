@@ -20,7 +20,7 @@ const regionSchema = new mongoose.Schema(
 		location: {
 			type: String,
 			enum: ['Point'],
-			default: 'Point',
+			required: true,
 		},
 		coordinates: [0, 0],
 		owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
