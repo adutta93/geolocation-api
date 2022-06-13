@@ -14,11 +14,18 @@ exports.CreateRegion = async (req, res) => {
 			owner,
 		});
 		const region = await newRegion.save();
-		res.status(201).json({
-			status: 'Success',
-			message: 'Region successfully created',
-			region,
-		});
+		if (!region) {
+			res.status(400).json({
+				status: 'Failed',
+				message: 'Unable to create region',
+			});
+		} else {
+			res.status(201).json({
+				status: 'Success',
+				message: 'Region successfully created',
+				region,
+			});
+		}
 	} catch (err) {
 		res.status(400).json({
 			status: 'Error',

@@ -11,7 +11,7 @@ const FindUser = async (id, email) => {
 
 const GenerateUserToken = (firstName, lastName, role) => {
 	const first_elem = firstName[0].toUpperCase() + lastName[0].toUpperCase();
-	const second_elem = role.toUpperCase();
+	const second_elem = role ? role.toUpperCase() : 'USER';
 	const third_elem = shortid.generate().toUpperCase();
 
 	return first_elem + '_' + second_elem + '_' + third_elem;

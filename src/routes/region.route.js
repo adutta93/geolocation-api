@@ -1,10 +1,10 @@
 const express = require('express');
 const { CreateRegion } = require('../controllers/region.controller');
 // const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validator/auth.validator');
-const { isSignedIn } = require('../middleware/auth.middleware');
+const { isSignedIn, isOwner } = require('../middleware/auth.middleware');
 const router = express.Router();
 
-router.post('/add-region', CreateRegion);
+router.post('/add-region', isSignedIn, isOwner, CreateRegion);
 
 // router.post('/admin/signout', signout);
 
