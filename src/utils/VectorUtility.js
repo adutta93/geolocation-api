@@ -1,3 +1,5 @@
+const turf = require('@turf/turf');
+
 const GenerateVectorUID = () => {
 	const first_elem = 'VECTOR';
 	const second_elem = 'SH';
@@ -11,4 +13,10 @@ const GenerateClassID = () => {
 	const class_id = Math.ceil(Math.random() * 14000);
 	return class_id;
 };
-module.exports = { GenerateVectorUID, GenerateClassID };
+
+const CalculateArea = (coordinates) => {
+	let polygon = turf.polygon(coordinates);
+	let area = turf.area(polygon);
+	return area;
+};
+module.exports = { GenerateVectorUID, GenerateClassID, CalculateArea };

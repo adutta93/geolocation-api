@@ -10,6 +10,9 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@turf/area": "^6.5.0",
+		"@turf/collect": "^6.5.0",
+		"@turf/turf": "^6.5.0",
 		"bcrypt": "^5.0.1",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.1",
