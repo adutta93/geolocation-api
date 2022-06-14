@@ -7,9 +7,9 @@
 - Run `npm install`
 - root url - <http://localhost:1993/>
 
-## Install - docker
+<!-- ## Install - docker
 
-- Clone this git repository
+- Clone this git repository -->
 
 ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg)
 
