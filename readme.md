@@ -11,9 +11,9 @@
 
 - Clone this git repository
 
-![]](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg)
+![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg)
 
-##Notes
+## Notes
 
 - Update and deletion is owner specific, if you are not the owner of a particular vector or region, you can not update or delete.
 - There is a thrid user-typr as `super-admin`, who can basically controll the whole application and can delete users.
@@ -23,9 +23,11 @@
   ` "email": "super@admin.com", "password": "user12345",`
 - Databse is hosted in MongoDB Atlas cloud.
 
-##API Endpoints
-###Auth endpoints
-#####Sign Up
+## API Endpoints
+
+### Auth endpoints
+
+##### Sign Up
 
 > - _/dev/api/signup_
 
@@ -41,7 +43,7 @@
 }
 ```
 
-#####Log In
+##### Log In
 
 > - _/dev/api/signin_
 
@@ -54,7 +56,7 @@
 }
 ```
 
-#####Get all user - super-admin
+##### Get all user - super-admin
 
 > - _/dev/api/get-all-user_
 
@@ -67,7 +69,7 @@
 }
 ```
 
-#####Delete user - super-admin
+##### Delete user - super-admin
 
 > - _/delete-user/:id_
 
@@ -80,9 +82,9 @@
 }
 ```
 
-###Region endpoints
+### Region endpoints
 
-#####Add region
+##### Add region
 
 > - _/dev/api/add-region_
 
@@ -102,7 +104,7 @@
 }
 ```
 
-#####Get all region
+##### Get all region
 
 > - _/get-all-region_
 
@@ -133,7 +135,7 @@
 }
 ```
 
-#####Get all region - with pagination
+##### Get all region - with pagination
 
 > - _/dev/api/get-all-region/pagination?skip=1_
 
@@ -164,7 +166,7 @@
 }
 ```
 
-#####Get region by ID
+##### Get region by ID
 
 > - _/dev/api/get-region-by-id/:id_
 
@@ -192,7 +194,7 @@
 }
 ```
 
-#####Update region
+##### Update region
 
 > - _/dev/api/update-region/:id_
 
@@ -208,7 +210,7 @@
 }
 ```
 
-#####Delete region
+##### Delete region
 
 > - _/dev/api/delete-region/:id_
 
@@ -225,9 +227,9 @@
 }
 ```
 
-###Vector/polygon endpoints
+### Vector/polygon endpoints
 
-#####Add vector
+##### Add vector
 
 > - _/dev/api/add-vector_
 
@@ -259,7 +261,7 @@
 }
 ```
 
-#####Get vectoe by Id
+##### Get vectoe by Id
 
 > - _/dev/api/vector/:id_
 
@@ -301,7 +303,7 @@
 }
 ```
 
-#####Get all vectors
+##### Get all vectors
 
 > - _/dev/api/get-all-vector_
 
@@ -345,7 +347,7 @@
 }
 ```
 
-#####Get all vectors - with pagination
+##### Get all vectors - with pagination
 
 > - _/dev/api/get-all-vector/pagination?skip=1_
 
@@ -389,7 +391,7 @@
 }
 ```
 
-#####Update vector
+##### Update vector
 
 > - \*/dev/api/vector-update/:id
 
@@ -405,7 +407,7 @@
 }
 ```
 
-#####Delete vector
+##### Delete vector
 
 > - _/dev/api/vector-update/:id_
 
@@ -418,8 +420,10 @@
 > response -
 
 ```json
-{
-	"msg": "vector successfully deleted ",
-	"id": "vectorId"
-}
+		{
+			"msg": 'vector successfully deleted ',
+			"id": "vectorId",
+		}
+`
+
 ```
