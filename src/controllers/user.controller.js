@@ -64,3 +64,38 @@ exports.signin = async (req, res) => {
 		});
 	}
 };
+
+exports.GetAllUsers = async (req, res) => {
+	try {
+		const users = await User.find();
+		res.status(200).json({
+			status: 'Success',
+			Total: users.length,
+			users,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+
+exports.DeleteUser = async (req, res) => {
+	try {
+		const user = await User.findById(req.params.id);
+
+		if (!user) return res.status(404).json({ Error: 'user not found' });
+
+		await user.remove();
+		res.json({
+			msg: 'user successfully deleted ',
+			id: req.params.id,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};

@@ -1,15 +1,12 @@
 const express = require('express');
-const { signup, signin } = require('../controllers/user.controller');
+const { signup, signin, GetAllUsers, DeleteUser } = require('../controllers/user.controller');
 const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validator/auth.validator');
-const { isSignedIn } = require('../middleware/auth.middleware');
+const { isSignedIn, isAdmin } = require('../middleware/auth.middleware');
 const router = express.Router();
 
 router.post('/signup', validateSignupRequest, isRequestValidated, signup);
 router.post('/signin', validateSigninRequest, isRequestValidated, signin);
-// router.post('/admin/signout', signout);
-
-router.post('/admin/profile', isSignedIn, (req, res) => {
-	res.status(200).json({ user: 'profile' });
-});
+router.get('/get-all-user', isSignedIn, isAdmin, GetAllUsers);
+router.get('/delete-user/:id', isSignedIn, isAdmin, DeleteUser);
 
 module.exports = router;

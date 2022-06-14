@@ -16,6 +16,7 @@ const isUserTheOwner = (userId, regionOwner) => {
 		return true;
 	}
 };
+
 const GenerateUserToken = (firstName, lastName, role) => {
 	const first_elem = firstName[0].toUpperCase() + lastName[0].toUpperCase();
 	const second_elem = role ? role.toUpperCase() : 'USER';

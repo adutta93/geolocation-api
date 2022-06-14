@@ -32,8 +32,7 @@ exports.isOwner = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-	console.log('User role => ', req.user.role);
-	if (req.user.role !== 'admin') {
+	if (req.user.role !== 'super-admin') {
 		return res.status(403).json({
 			message: "You're not an admin, access denied",
 		});
