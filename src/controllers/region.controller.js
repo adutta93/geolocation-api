@@ -71,7 +71,11 @@ exports.GetAllRegionPagination = async (req, res) => {
 
 exports.GetRegionById = async (req, res) => {
 	try {
-		const region = await Region.findById(req.params.id);
+		const { id } = req.params;
+		if (!id) res.status(400).json({ error: 'Region Id required' });
+		const region = await Region.findById(id);
+
+		if (!region) res.status(404).json({ error: 'could not find region' });
 		res.status(200).json({
 			status: 'Success',
 			region,

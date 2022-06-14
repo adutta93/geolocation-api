@@ -1,5 +1,6 @@
 const Vector = require('../models/vector.model');
 const { GenerateVectorUID, GenerateClassID, CalculateArea } = require('../utils/VectorUtility');
+const { isUserTheOwner } = require('../utils/UserUtility');
 
 exports.CreateVector = async (req, res) => {
 	try {
@@ -72,40 +73,108 @@ exports.GetAllVectorsPagination = async (req, res) => {
 };
 
 exports.GetVectorById = async (req, res) => {
-	const { uid } = req.params;
-	if (!uid) {
-		return res.status(400).json({ error: 'Vector Id required' });
-	}
-	const vector = await Vector.findOne({ uid: uid });
-	if (!vector) {
-		return res.status(400).json({ error: 'could not find vector' });
-	}
-	const coordinates = vector.geometry.coordinates;
-	const VectorArea = await CalculateArea(coordinates);
+	try {
+		const { id } = req.params;
+		if (!id) {
+			return res.status(400).json({ error: 'Vector Id required' });
+		}
+		const vector = await Vector.findOne({ _id: id });
+		if (!vector) {
+			return res.status(400).json({ error: 'could not find vector' });
+		}
+		const coordinates = vector.geometry.coordinates;
+		const VectorArea = await CalculateArea(coordinates);
 
-	res.status(200).json({ vector, VectorArea: VectorArea });
+		res.status(200).json({ vector, VectorArea: VectorArea });
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
 };
 
 exports.SearchThroughQueryParams = async (req, res) => {
-	const { className, region } = req.query;
-	if (!className || region.length < 24) {
+	try {
+		const { className, region } = req.query;
+		if (!className || region.length < 24) {
+			res.status(400).json({
+				status: 'Failed',
+				message: 'Invalid query',
+			});
+		}
+		// console.log(className, region);
+		const vector = await Vector.findOne({ className: className, region: region });
+		if (!vector) {
+			res.status(400).json({
+				status: 'Failed',
+				message: 'Vector not found',
+			});
+		} else {
+			res.status(201).json({
+				status: 'Success',
+				message: 'Got vector',
+				vector,
+			});
+		}
+	} catch (err) {
 		res.status(400).json({
-			status: 'Failed',
-			message: 'Invalid query',
+			status: 'Error',
+			err: err.message,
 		});
 	}
-	console.log(className, region);
-	const vector = await Vector.findOne({ className: className, region: region });
-	if (!vector) {
-		res.status(400).json({
-			status: 'Failed',
-			message: 'Vector not found',
+};
+
+exports.UpdateVector = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const vector = await Vector.findById(req.params.id);
+
+		if (!vector) return res.status(404).json({ Error: 'vector not found' });
+
+		if (!isUserTheOwner(userId, vector.owner)) {
+			res.status(400).json({
+				status: 'Failed, you are not the owner, you cant update',
+			});
+		}
+
+		const updatedVector = await vector.update(req.body, {
+			new: true,
 		});
-	} else {
-		res.status(201).json({
-			status: 'Success',
-			message: 'Got vector',
-			vector,
+
+		res.status(200).json({
+			msg: 'Vector updated successfully',
+			updatedVector,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+exports.DeleteVector = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const vector = await Vector.findById(req.params.id);
+
+		if (!vector) return res.status(404).json({ Error: 'vector not found' });
+
+		if (!isUserTheOwner(userId, vector.owner)) {
+			res.status(400).json({
+				status: 'Failed, you are not the owner, you cant delete',
+			});
+		}
+
+		await vector.remove();
+		res.json({
+			msg: 'vector successfully deleted ',
+			id: req.params.id,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
 		});
 	}
 };
