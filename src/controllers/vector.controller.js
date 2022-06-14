@@ -1,5 +1,5 @@
 const Vector = require('../models/vector.model');
-const { GenerateVectorUID, GenerateClassID, CalculateArea } = require('../utils/VectorUtility');
+const { GenerateVectorUID, GenerateClassID, CalculateArea, CalculatePerimeter } = require('../utils/VectorUtility');
 const { isUserTheOwner } = require('../utils/UserUtility');
 
 exports.CreateVector = async (req, res) => {
@@ -84,8 +84,9 @@ exports.GetVectorById = async (req, res) => {
 		}
 		const coordinates = vector.geometry.coordinates;
 		const VectorArea = await CalculateArea(coordinates);
+		const VectorPerimeter = await CalculatePerimeter(coordinates);
 
-		res.status(200).json({ vector, VectorArea: VectorArea });
+		res.status(200).json({ vector, area: VectorArea, perimeter: VectorPerimeter });
 	} catch (err) {
 		res.status(400).json({
 			status: 'Error',
