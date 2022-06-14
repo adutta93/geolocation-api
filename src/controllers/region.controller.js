@@ -33,3 +33,40 @@ exports.CreateRegion = async (req, res) => {
 		});
 	}
 };
+
+exports.GetAllRegion = async (req, res) => {
+	try {
+		const regions = await Region.find();
+		res.status(200).json({
+			status: 'Success',
+			Total: regions.length,
+			regions,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+
+exports.GetAllRegionPagination = async (req, res) => {
+	const skip = req.query.skip ? Number(req.query.skip) : 0;
+	const DEFAULT_LIMIT = 10;
+	try {
+		const regions = await Region.find({}).skip(skip).limit(DEFAULT_LIMIT);
+		res.status(200).json({
+			status: 'Success',
+			Total: regions.length,
+			regions,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+exports.GetRegionById = () => {};
+exports.UpdateRegion = () => {};
+exports.DeleteRegion = () => {};

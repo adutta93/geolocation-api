@@ -1,12 +1,11 @@
 const express = require('express');
-const { CreateRegion } = require('../controllers/region.controller');
-// const { validateSignupRequest, isRequestValidated, validateSigninRequest } = require('../validator/auth.validator');
+const { CreateRegion, GetAllRegion, GetAllRegionPagination } = require('../controllers/region.controller');
 const { isSignedIn, isOwner } = require('../middleware/auth.middleware');
 const router = express.Router();
 
 router.post('/add-region', isSignedIn, isOwner, CreateRegion);
-
-// router.post('/admin/signout', signout);
+router.get('/get-all-region', isSignedIn, GetAllRegion);
+router.get('/get-all-region/pagination', isSignedIn, GetAllRegionPagination);
 
 router.post('/admin/profile', isSignedIn, (req, res) => {
 	res.status(200).json({ user: 'profile' });
