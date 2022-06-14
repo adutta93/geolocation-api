@@ -3,8 +3,10 @@ const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const { SECRET } = require('../config/');
 
+/**
+ * !isSignedIn
+ */
 exports.isSignedIn = async (req, res, next) => {
-	console.log('process.env.APP_SECRET', SECRET);
 	let token;
 	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
 		try {
@@ -22,6 +24,9 @@ exports.isSignedIn = async (req, res, next) => {
 	}
 };
 
+/**
+ * !isOwner
+ */
 exports.isOwner = (req, res, next) => {
 	if (req.user.role !== 'owner') {
 		return res.status(403).json({
@@ -31,6 +36,9 @@ exports.isOwner = (req, res, next) => {
 	next();
 };
 
+/**
+ * !isAdmin
+ */
 exports.isAdmin = (req, res, next) => {
 	if (req.user.role !== 'super-admin') {
 		return res.status(403).json({

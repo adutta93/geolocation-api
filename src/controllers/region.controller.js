@@ -2,6 +2,9 @@ const Region = require('../models/region.model');
 const { GenerateRegionUID } = require('../utils/RegionUtility');
 const { isUserTheOwner } = require('../utils/UserUtility');
 
+/**
+ * !CreateRegion
+ */
 exports.CreateRegion = async (req, res) => {
 	try {
 		const { name, description, location, owner, coordinates } = req.body;
@@ -35,6 +38,9 @@ exports.CreateRegion = async (req, res) => {
 	}
 };
 
+/**
+ * !GetAllRegion
+ */
 exports.GetAllRegion = async (req, res) => {
 	try {
 		const regions = await Region.find();
@@ -51,6 +57,9 @@ exports.GetAllRegion = async (req, res) => {
 	}
 };
 
+/**
+ * !GetAllRegionPagination
+ */
 exports.GetAllRegionPagination = async (req, res) => {
 	const skip = req.query.skip ? Number(req.query.skip) : 0;
 	const DEFAULT_LIMIT = 10;
@@ -69,6 +78,9 @@ exports.GetAllRegionPagination = async (req, res) => {
 	}
 };
 
+/**
+ * !GetRegionById
+ */
 exports.GetRegionById = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -88,6 +100,9 @@ exports.GetRegionById = async (req, res) => {
 	}
 };
 
+/**
+ * !UpdateRegion
+ */
 exports.UpdateRegion = async (req, res) => {
 	try {
 		const userId = req.user.id;
@@ -116,6 +131,10 @@ exports.UpdateRegion = async (req, res) => {
 		});
 	}
 };
+
+/**
+ * !DeleteRegion
+ */
 exports.DeleteRegion = async (req, res) => {
 	try {
 		const userId = req.user.id;

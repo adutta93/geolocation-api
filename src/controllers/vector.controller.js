@@ -2,6 +2,9 @@ const Vector = require('../models/vector.model');
 const { GenerateVectorUID, GenerateClassID, CalculateArea, CalculatePerimeter } = require('../utils/VectorUtility');
 const { isUserTheOwner } = require('../utils/UserUtility');
 
+/**
+ * !CreateVector
+ */
 exports.CreateVector = async (req, res) => {
 	try {
 		const { name, description, className, geometry, coordinates, owner, region } = req.body;
@@ -38,6 +41,9 @@ exports.CreateVector = async (req, res) => {
 	}
 };
 
+/**
+ * !GetAllVectors
+ */
 exports.GetAllVectors = async (req, res) => {
 	try {
 		const vectors = await Vector.find();
@@ -54,6 +60,9 @@ exports.GetAllVectors = async (req, res) => {
 	}
 };
 
+/**
+ * !GetAllVectorsPagination
+ */
 exports.GetAllVectorsPagination = async (req, res) => {
 	const skip = req.query.skip ? Number(req.query.skip) : 0;
 	const DEFAULT_LIMIT = 10;
@@ -72,6 +81,9 @@ exports.GetAllVectorsPagination = async (req, res) => {
 	}
 };
 
+/**
+ * !GetVectorById
+ */
 exports.GetVectorById = async (req, res) => {
 	try {
 		const { id } = req.params;
@@ -95,6 +107,9 @@ exports.GetVectorById = async (req, res) => {
 	}
 };
 
+/**
+ * !SearchThroughQueryParams
+ */
 exports.SearchThroughQueryParams = async (req, res) => {
 	try {
 		const { className, region } = req.query;
@@ -126,6 +141,9 @@ exports.SearchThroughQueryParams = async (req, res) => {
 	}
 };
 
+/**
+ * !UpdateVector
+ */
 exports.UpdateVector = async (req, res) => {
 	try {
 		const userId = req.user.id;
@@ -154,6 +172,10 @@ exports.UpdateVector = async (req, res) => {
 		});
 	}
 };
+
+/**
+ * !DeleteVector
+ */
 exports.DeleteVector = async (req, res) => {
 	try {
 		const userId = req.user.id;

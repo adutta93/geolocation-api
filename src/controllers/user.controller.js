@@ -5,7 +5,6 @@ const { GenereteSalt, GeneretePassword, GenerateSignature } = require('../utils/
 /**
  *
  * ! Add user
- * * Post req
  */
 
 exports.signup = async (req, res) => {
@@ -38,7 +37,6 @@ exports.signup = async (req, res) => {
 /**
  *
  * ! Login
- * * Post req
  */
 
 exports.signin = async (req, res) => {
@@ -65,6 +63,9 @@ exports.signin = async (req, res) => {
 	}
 };
 
+/**
+ * !GetAllUsers
+ */
 exports.GetAllUsers = async (req, res) => {
 	try {
 		const users = await User.find();
@@ -81,6 +82,9 @@ exports.GetAllUsers = async (req, res) => {
 	}
 };
 
+/**
+ * !DeleteUser
+ */
 exports.DeleteUser = async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);

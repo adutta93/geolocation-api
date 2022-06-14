@@ -1,6 +1,9 @@
 const User = require('../models/user.model');
 const shortid = require('shortid');
 
+/**
+ * !Finduser
+ */
 const FindUser = async (id, email) => {
 	if (email) {
 		return await User.findOne({ email: email });
@@ -9,6 +12,9 @@ const FindUser = async (id, email) => {
 	}
 };
 
+/**
+ * !isUserTheowner
+ */
 const isUserTheOwner = (userId, regionOwner) => {
 	if (userId != regionOwner) {
 		return false;
@@ -17,6 +23,9 @@ const isUserTheOwner = (userId, regionOwner) => {
 	}
 };
 
+/**
+ * !GenerateUserToken
+ */
 const GenerateUserToken = (firstName, lastName, role) => {
 	const first_elem = firstName[0].toUpperCase() + lastName[0].toUpperCase();
 	const second_elem = role ? role.toUpperCase() : 'USER';

@@ -1,5 +1,9 @@
 const turf = require('@turf/turf');
 
+/**
+ * !GenerateVectorUID
+ */
+
 const GenerateVectorUID = () => {
 	const first_elem = 'VECTOR';
 	const second_elem = 'SH';
@@ -9,10 +13,18 @@ const GenerateVectorUID = () => {
 	return first_elem + '_' + second_elem + '_' + third_elem + fourth_elem;
 };
 
+/**
+ * !GenerateClassID
+ */
+
 const GenerateClassID = () => {
 	const class_id = Math.ceil(Math.random() * 14000);
 	return class_id;
 };
+
+/**
+ * !CalculateArea
+ */
 
 const CalculateArea = (coordinates) => {
 	let polygon = turf.polygon(coordinates);
@@ -20,6 +32,9 @@ const CalculateArea = (coordinates) => {
 	return area;
 };
 
+/**
+ * !CalculatePerimeter
+ */
 const CalculatePerimeter = (coordinates) => {
 	let totalPerimeter = 0;
 	let i = 0;

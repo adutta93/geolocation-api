@@ -1,11 +1,3 @@
-// a. UID* (different from primary key)
-// b. Name*
-// c. Description
-// d. ClassID* (a numeric identifier of your choice)
-// e. ClassName* (a name for the tag of a vector)
-// f. Polygon* (geojson of type Polygon)
-// g. Region* (a reference/foreign key to a region)
-
 const mongoose = require('mongoose');
 
 const vectorSchema = new mongoose.Schema(

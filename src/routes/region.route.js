@@ -17,8 +17,4 @@ router.get('/get-region-by-id/:id', isSignedIn, GetRegionById);
 router.put('/update-region/:id', isSignedIn, isOwner, UpdateRegion);
 router.delete('/delete-region/:id', isSignedIn, isOwner, DeleteRegion);
 
-// router.get('/admin/profile', isSignedIn, ifTheOwner, (req, res) => {
-// 	res.status(200).json({ user: 'profile' });
-// });
-
 module.exports = router;

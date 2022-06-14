@@ -82,6 +82,10 @@
 }
 ```
 
+##### Search/Filter
+
+> - _/dev/api/search/vector?className=vector_class_1&region=62a748d016bd047d67661c34_
+
 ### Region endpoints
 
 ##### Add region
