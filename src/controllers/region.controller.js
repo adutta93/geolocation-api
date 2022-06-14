@@ -1,5 +1,6 @@
 const Region = require('../models/region.model');
 const { GenerateRegionUID } = require('../utils/RegionUtility');
+const { isUserTheOwner } = require('../utils/UserUtility');
 
 exports.CreateRegion = async (req, res) => {
 	try {
@@ -67,6 +68,72 @@ exports.GetAllRegionPagination = async (req, res) => {
 		});
 	}
 };
-exports.GetRegionById = () => {};
-exports.UpdateRegion = () => {};
-exports.DeleteRegion = () => {};
+
+exports.GetRegionById = async (req, res) => {
+	try {
+		const region = await Region.findById(req.params.id);
+		res.status(200).json({
+			status: 'Success',
+			region,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+
+exports.UpdateRegion = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const region = await Region.findById(req.params.id);
+
+		if (!region) return res.status(404).json({ Error: 'Region not found' });
+
+		if (!isUserTheOwner(userId, region.owner)) {
+			res.status(400).json({
+				status: 'Failed, you are not the owner, you cant update',
+			});
+		}
+
+		const updatedRegion = await region.update(req.body, {
+			new: true,
+		});
+
+		res.status(200).json({
+			msg: 'Region updated successfully',
+			updatedRegion,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+exports.DeleteRegion = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const region = await Region.findById(req.params.id);
+
+		if (!region) return res.status(404).json({ Error: 'Region not found' });
+
+		if (!isUserTheOwner(userId, region.owner)) {
+			res.status(400).json({
+				status: 'Failed, you are not the owner, you cant delete',
+			});
+		}
+
+		await region.remove();
+		res.json({
+			msg: 'region successfully deleted ',
+			id: req.params.id,
+		});
+	} catch (error) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};

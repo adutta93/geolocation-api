@@ -9,6 +9,13 @@ const FindUser = async (id, email) => {
 	}
 };
 
+const isUserTheOwner = (userId, regionOwner) => {
+	if (userId != regionOwner) {
+		return false;
+	} else {
+		return true;
+	}
+};
 const GenerateUserToken = (firstName, lastName, role) => {
 	const first_elem = firstName[0].toUpperCase() + lastName[0].toUpperCase();
 	const second_elem = role ? role.toUpperCase() : 'USER';
@@ -16,4 +23,4 @@ const GenerateUserToken = (firstName, lastName, role) => {
 
 	return first_elem + '_' + second_elem + '_' + third_elem;
 };
-module.exports = { FindUser, GenerateUserToken };
+module.exports = { FindUser, GenerateUserToken, isUserTheOwner };

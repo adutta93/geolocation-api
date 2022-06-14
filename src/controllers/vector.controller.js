@@ -37,6 +37,40 @@ exports.CreateVector = async (req, res) => {
 	}
 };
 
+exports.GetAllVectors = async (req, res) => {
+	try {
+		const vectors = await Vector.find();
+		res.status(200).json({
+			status: 'Success',
+			Total: vectors.length,
+			vectors,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+
+exports.GetAllVectorsPagination = async (req, res) => {
+	const skip = req.query.skip ? Number(req.query.skip) : 0;
+	const DEFAULT_LIMIT = 10;
+	try {
+		const vectors = await Vector.find({}).skip(skip).limit(DEFAULT_LIMIT);
+		res.status(200).json({
+			status: 'Success',
+			Total: vectors.length,
+			vectors,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: 'Error',
+			err: err.message,
+		});
+	}
+};
+
 exports.GetVectorById = async (req, res) => {
 	const { uid } = req.params;
 	if (!uid) {

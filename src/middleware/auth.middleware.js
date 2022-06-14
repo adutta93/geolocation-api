@@ -23,10 +23,6 @@ exports.isSignedIn = async (req, res, next) => {
 };
 
 exports.isOwner = (req, res, next) => {
-	console.log('User role => ', req);
-	if (req.user === null) {
-		req.user.role = 'user';
-	}
 	if (req.user.role !== 'owner') {
 		return res.status(403).json({
 			message: "You're not an owner, access denied",
