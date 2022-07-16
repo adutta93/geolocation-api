@@ -1,4 +1,4 @@
-# Assignment - SenseHawk
+# SenseHawk
 
 ## Install - NPM
 
